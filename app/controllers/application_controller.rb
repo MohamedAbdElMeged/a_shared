@@ -3,12 +3,8 @@ class ApplicationController < ActionController::API
         request.headers["authorization"].split(' ')[1]
     end
     def logged_in_user
-        if AuthHelper.decoded_token(auth_header)
-            email = AuthHelper.decoded_token(auth_header)[0]['user']['email'].to_s
-            @user = UsersHelper.get_user_by_email(email)
-        else
-            head(:unauthorized)
-        end
+            email = UserService::VerifyUser.new(auth_header).call
+            @user = UserService::GetUserByEmail.new(email).call
     end
     def logged_in?
         !!logged_in_user  

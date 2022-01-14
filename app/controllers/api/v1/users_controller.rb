@@ -7,7 +7,7 @@ class Api::V1::UsersController < ApplicationController
         render "create",locals: {user: user}
     end
     def sign_in
-        user = AuthHelper.sign_in(params[:email],params[:password])
+        user = UserService::SignInUser.new(params[:email],params[:password]).call
         if user != nil 
              render "create",locals: {user: user} 
         else 

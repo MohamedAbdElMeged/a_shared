@@ -13,8 +13,8 @@ class UserServer < Helloworld::Users::Service
     end    
 
     def get_user_by_token(get_user_by_token_req, _unused_call)
-      email = AuthHelper.decoded_token(get_user_by_token_req.token)[0]['user']['email'].to_s
-      user = UsersHelper.get_user_by_email(email)
+      email = UserService::VerifyUser.new(get_user_by_token_req.token).call
+      user = UserService::GetUserByEmail.new(email).call
       puts user
       Helloworld::GetUserReply.new(status: "success" ,user: {email:user.email ,name: user.name, id: user.id})
     end

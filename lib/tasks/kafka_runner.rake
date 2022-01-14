@@ -16,7 +16,7 @@ task :kafka_runner => [:environment] do
         h = Hash.new
         h = eval(message.payload.to_s)
         # puts "Message received: #{h.fetch(:id)}"
-        action = LogsHelper.create(h["service"],h["domain"],h['action'],h['actor'].to_i,h['domain_id'].to_i )
+        action = LogService::CreateLog.new(h["service"],h["domain"],h['action'],h['actor'].to_i,h['domain_id'].to_i ).call
         Rails.logger.info "Hello #{message.payload.to_s}"
         #Rails.logger.info message.payload.to_s
 
