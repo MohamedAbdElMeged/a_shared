@@ -15,6 +15,7 @@ module Helloworld
       self.service_name = 'helloworld.Users'
 
       rpc :GetUserById, ::Helloworld::GetUserRequest, ::Helloworld::GetUserReply
+      rpc :GetUserByToken, ::Helloworld::GetUserByTokenRequest, ::Helloworld::GetUserReply
     end
 
     Stub = Service.rpc_stub_class

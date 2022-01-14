@@ -4,6 +4,18 @@ class UserServer < Helloworld::Users::Service
 
     def get_user_by_id(get_user_req, _unused_call)
       user =User.find(get_user_req.id)
-      Helloworld::GetUserReply.new(email: user.email , name: user.name, id: user.id)
+      
+      if user
+        Helloworld::GetUserReply.new(status: "success" ,user: {email: user.email ,name: user.name, id: user.id})
+      else
+        Helloworld::GetUserReply.new(status: "error"  ,error: {message: "not found"})
+      end
     end    
+
+    def get_user_by_token(get_user_by_token_req, _unused_call)
+      email = AuthHelper.decoded_token(get_user_by_token_req.token)[0]['user']['email'].to_s
+      user = UsersHelper.get_user_by_email(email)
+      puts user
+      Helloworld::GetUserReply.new(status: "success" ,user: {email:user.email ,name: user.name, id: user.id})
+    end
 end

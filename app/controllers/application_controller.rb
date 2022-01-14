@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
     def auth_header
-        request.headers["authorization"]    
+        request.headers["authorization"].split(' ')[1]
     end
     def logged_in_user
         if AuthHelper.decoded_token(auth_header)
