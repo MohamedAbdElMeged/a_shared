@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :validatable
   attr_accessor :auth_token
   
+  
 end
