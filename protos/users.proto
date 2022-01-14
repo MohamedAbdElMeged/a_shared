@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package helloworld;
+service Users {
+rpc GetUserById (GetUserRequest) returns (GetUserReply);
+}
+
+message GetUserRequest {
+    int32 id = 1;
+}
+
+message GetUserReply {
+    string email = 1;
+    string name = 2;
+    int32 id = 3;
+}

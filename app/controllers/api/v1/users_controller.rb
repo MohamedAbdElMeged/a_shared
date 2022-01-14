@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
     before_action :logged_in_user , only: [:current_user,:logout]
 
     def sign_up
-        user = UsersHelper.register_user(user_params)
+        user = UserService::CreateUser.new(params[:user][:name],params[:user][:email],params[:user][:password],params[:user][:password_confirmation]).call
         render "create",locals: {user: user}
     end
     def sign_in
